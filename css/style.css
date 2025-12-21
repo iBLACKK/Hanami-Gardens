@@ -107,6 +107,13 @@
     z-index: 99;
 }
 
+/* Move back-to-top button on small screens to avoid overlap with WhatsApp button */
+@media (max-width: 576px) {
+    .back-to-top {
+        bottom: 100px !important;
+    }
+}
+
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Jost', sans-serif;
     position: relative;
