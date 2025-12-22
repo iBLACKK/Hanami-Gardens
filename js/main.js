@@ -1,6 +1,6 @@
 (function ($) {
     "use strict";
-    
+
     // Dropdown on mouse hover
     $(document).ready(function () {
         function toggleNavbarMethod() {
@@ -20,43 +20,50 @@
 
 
     // Date and time picker
-    $('.date').datetimepicker({
-        format: 'L',
-        // prevent selection of past dates
-        minDate: moment().startOf('day')
-    });
-    $('.time').datetimepicker({
-        format: 'LT'
+    // Date and time picker
+    flatpickr("#preferred_date_input", {
+        dateFormat: "d-m-Y",
+        minDate: "today",
+        allowInput: true
     });
 
-    // Update the timepicker minimum when the date changes: if date is today, min time is now
-    function updateTimeMinSetting() {
+    flatpickr("#preferred_time_input", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: true
+    });
+
+    // Validates date and time
+    function isDateTimeValid() {
         var dateVal = $('#preferred_date_input').val();
-        var $timePicker = $('#preferred_time');
-        if ($timePicker.length === 0) return;
+        var timeVal = $('#preferred_time_input').val();
 
-        if (!dateVal) {
-            // remove any minDate restriction
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-            return;
-        }
-        var d = moment(dateVal, 'L', true);
-        if (!d.isValid()) {
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-            return;
-        }
-        if (d.isSame(moment(), 'day')) {
-            // set minDate/time to now
-            try { $timePicker.datetimepicker('minDate', moment()); } catch(e) {}
-        } else {
-            // remove min
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-        }
+        if (!dateVal || !timeVal) return false;
+
+        // Parse DD-MM-YYYY
+        var parts = dateVal.split('-');
+        if (parts.length !== 3) return false;
+        var day = parseInt(parts[0], 10);
+        var month = parseInt(parts[1], 10) - 1;
+        var year = parseInt(parts[2], 10);
+
+        var inputDate = new Date(year, month, day);
+
+        // Parse HH:mm
+        var timeParts = timeVal.split(':');
+        if (timeParts.length !== 2) return false;
+        var hours = parseInt(timeParts[0], 10);
+        var minutes = parseInt(timeParts[1], 10);
+
+        inputDate.setHours(hours, minutes, 0, 0);
+
+        var now = new Date();
+        return inputDate >= now;
     }
-    // run on load in case a date is prefilled
-    updateTimeMinSetting();
-    
-    
+
+
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -66,7 +73,7 @@
         }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -78,20 +85,20 @@
         margin: 45,
         dots: false,
         loop: true,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             },
-            1200:{
-                items:3
+            1200: {
+                items: 3
             }
         }
     });
@@ -104,17 +111,17 @@
         margin: 45,
         dots: false,
         loop: true,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             }
         }
     });
@@ -129,124 +136,116 @@
         loop: true,
     });
 
-    // Phone input: prefilled country code validation (E.164-ish)
+    // Phone input: strict validation for +254 followed by exactly 9 digits
     $(document).ready(function () {
         var $phone = $('#phone');
         var $form = $('#appointmentForm');
+        var prefix = "+254";
 
-        if ($phone.length === 0 || $form.length === 0) return; // nothing to do on pages without the appointment form
+        if ($phone.length === 0 || $form.length === 0) return;
 
-        function isValidE164(val) {
-            if (!val) return false;
-            var cleaned = val.replace(/[\s\-()]/g, '');
-            if (!cleaned.startsWith('+')) return false;
-            var digits = cleaned.substring(1);
-            // Require a country code (no leading 0), and between 7 and 15 total digits (E.164-ish)
-            return /^[1-9]\d{6,14}$/.test(digits);
+        // Helper to validate format: must start with +254 and have exactly 9 digits after
+        function isValidPhone(val) {
+            if (!val.startsWith(prefix)) return false;
+            var suffix = val.substring(prefix.length);
+            return /^\d{9}$/.test(suffix);
         }
 
-        $phone.on('input', function () {
+        // Enforce prefix and allow only numbers
+        $phone.on('input', function (e) {
             var val = $(this).val();
-            if (isValidE164(val)) {
+
+            // 1. Ensure prefix is always present at the start
+            if (!val.startsWith(prefix)) {
+                // If the user deleted the '+' or '254', the raw digits might still be there. 
+                // Let's go with a robust input masking approach:
+                // Strip everything that isn't a digit
+                var digits = val.replace(/\D/g, '');
+
+                // If the user deleted part of +254, we restore it.
+                // We'll treat the remaining digits as the body.
+                // But we must be careful not to duplicate if the user just highlighted 254.
+                // Simplified: prefix + digits (stripping any new 254 if it seems like a duplicate? No, too complex).
+                // Just: prefix + valid body digits.
+
+                var rawDigits = val.replace(/\D/g, '');
+                var suffix = "";
+
+                // If rawDigits starts with 254, we assume that's the country code key-in
+                if (rawDigits.startsWith("254")) {
+                    suffix = rawDigits.substring(3);
+                } else {
+                    suffix = rawDigits;
+                }
+
+                // Truncate to 9 digits
+                if (suffix.length > 9) suffix = suffix.substring(0, 9);
+
+                $(this).val(prefix + suffix);
+            } else {
+                // Starts with +254, check the rest
+                var suffix = val.substring(prefix.length);
+                // remove non-digits from suffix
+                var cleanSuffix = suffix.replace(/\D/g, '');
+                // truncate to 9
+                if (cleanSuffix.length > 9) cleanSuffix = cleanSuffix.substring(0, 9);
+
+                if (suffix !== cleanSuffix) {
+                    $(this).val(prefix + cleanSuffix);
+                }
+            }
+
+            // Re-validate for visual feedback
+            var currentVal = $(this).val();
+            if (isValidPhone(currentVal)) {
                 $(this).removeClass('is-invalid').addClass('is-valid');
             } else {
                 $(this).removeClass('is-valid').addClass('is-invalid');
             }
         });
 
-        // Prevent typing of invalid characters (letters, multiple +, etc.)
+        // Prevent deleting the prefix via keydown
         $phone.on('keydown', function (e) {
-            var allowedKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','Tab'];
-            if (allowedKeys.indexOf(e.key) !== -1) return; // allow navigation and editing keys
-            if (e.ctrlKey || e.metaKey) return; // allow copy/paste/select-all shortcuts
+            var el = this;
+            // If strictly inside prefix
+            if (el.selectionStart < prefix.length) {
+                // allow arrows, home, end, tab
+                if (['ArrowLeft', 'ArrowRight', 'Home', 'End', 'Tab'].indexOf(e.key) !== -1) return;
 
-            var key = e.key;
-            // Allow single-character keys only if they are digits, space, dash, parentheses, or plus
-            if (key.length === 1) {
-                var isDigit = /[0-9]/.test(key);
-                var isSep = /[ \-()]/.test(key);
-                var isPlus = key === '+';
-                if (!(isDigit || isSep || isPlus)) {
+                // If they try to backspace the prefix
+                if (e.key === 'Backspace' && el.selectionEnd === el.selectionStart) {
                     e.preventDefault();
                     return;
                 }
-                if (isPlus) {
-                    // only allow plus at the start and only once
-                    var val = this.value;
-                    var selStart = this.selectionStart;
-                    if (val.indexOf('+') !== -1 || selStart !== 0) {
+
+                // If typing, move to end of prefix? 
+                // Just allow input event to handle cleanup is safer for edge cases, 
+                // but preventing modification of prefix via keydown is good.
+                if (e.key.length === 1 || e.key === 'Delete') {
+                    // prevent changing prefix
+                    if (el.selectionStart < prefix.length && el.selectionEnd <= prefix.length) {
                         e.preventDefault();
-                        return;
+                        // optionally move cursor to end of prefix
+                        el.setSelectionRange(prefix.length, prefix.length);
                     }
                 }
             }
         });
 
-        // Sanitize pasted content: allow digits, leading +, spaces, dashes, parentheses
-        $phone.on('paste', function (e) {
-            e.preventDefault();
-            var clipboard = (e.originalEvent || e).clipboardData.getData('text') || '';
-            // keep digits and allowed punctuation
-            var sanitized = clipboard.replace(/[^\d\+\-\s\(\)]/g, '');
-            // remove any plus signs that are not leading
-            sanitized = sanitized.replace(/\++/g, '+');
-            if (sanitized.indexOf('+') > 0) {
-                // move the plus to the front if it exists but not at position 0
-                sanitized = '+' + sanitized.replace(/\+/g, '');
-            }
-            // ensure only a single leading plus
-            if (sanitized.indexOf('+') === 0) {
-                sanitized = '+' + sanitized.substring(1).replace(/\+/g, '');
-            } else {
-                sanitized = sanitized.replace(/\+/g, '');
-            }
-
-            var input = this;
-            var start = input.selectionStart;
-            var end = input.selectionEnd;
-            var newVal = input.value.slice(0, start) + sanitized + input.value.slice(end);
-            if (input.maxLength > 0) newVal = newVal.slice(0, input.maxLength);
-            input.value = newVal;
-            // trigger input event so validation runs
-            $(input).trigger('input');
-        });
-
-        // Also sanitize drop events
-        $phone.on('drop', function (e) {
-            e.preventDefault();
-            var data = (e.originalEvent || e).dataTransfer.getData('text') || '';
-            var sanitized = data.replace(/[^\d\+\-\s\(\)]/g, '');
-            sanitized = sanitized.replace(/\++/g, '+');
-            if (sanitized.indexOf('+') > 0) sanitized = '+' + sanitized.replace(/\+/g, '');
-            if (sanitized.indexOf('+') === 0) sanitized = '+' + sanitized.substring(1).replace(/\+/g, '');
-            else sanitized = sanitized.replace(/\+/g, '');
-            var input = this;
-            var start = input.selectionStart;
-            var end = input.selectionEnd;
-            var newVal = input.value.slice(0, start) + sanitized + input.value.slice(end);
-            if (input.maxLength > 0) newVal = newVal.slice(0, input.maxLength);
-            input.value = newVal;
-            $(input).trigger('input');
-        });
+        // Handle paste/drop via the input event primarily, but can add specific handlers if needed.
+        // The input event handler above is aggressive enough to handle pased content.
 
         $form.on('submit', function (e) {
-            if (!isValidE164($phone.val())) {
+            if (!isValidPhone($phone.val())) {
                 e.preventDefault();
                 $phone.addClass('is-invalid').removeClass('is-valid');
                 $phone[0].focus();
                 return false;
             }
             // Validate preferred date/time is now or future
-            var dateVal = $('#preferred_date_input').val();
-            var timeVal = $('#preferred_time_input').val();
+            // Validate preferred date/time is now or future
             var $date = $('#preferred_date_input');
             var $time = $('#preferred_time_input');
-            function isDateTimeValid() {
-                if (!dateVal || !timeVal) return false;
-                var dt = moment(dateVal + ' ' + timeVal, 'L LT', true);
-                if (!dt.isValid()) return false;
-                return dt.isSameOrAfter(moment());
-            }
 
             if (!isDateTimeValid()) {
                 e.preventDefault();
@@ -259,20 +258,22 @@
         });
 
         // Validate when user changes date or time
+        // Validate when user changes date or time
         function validateDateTimeInputs() {
             var dateVal = $('#preferred_date_input').val();
             var timeVal = $('#preferred_time_input').val();
             var $date = $('#preferred_date_input');
             var $time = $('#preferred_time_input');
             var $fb = $('#datetimeFeedback');
+
             if (!dateVal || !timeVal) {
                 $date.removeClass('is-valid').removeClass('is-invalid');
                 $time.removeClass('is-valid').removeClass('is-invalid');
                 $fb.hide();
                 return;
             }
-            var dt = moment(dateVal + ' ' + timeVal, 'L LT', true);
-            if (!dt.isValid() || !dt.isSameOrAfter(moment())) {
+
+            if (!isDateTimeValid()) {
                 $date.addClass('is-invalid').removeClass('is-valid');
                 $time.addClass('is-invalid').removeClass('is-valid');
                 $fb.show();
@@ -283,15 +284,9 @@
             }
         }
 
-        // hook into tempusdominus change events
-        $('.date').on('change.datetimepicker', function() {
-            updateTimeMinSetting();
-            validateDateTimeInputs();
-        });
-        $('.time').on('change.datetimepicker', validateDateTimeInputs);
         // also validate on manual input
-        $('#preferred_date_input, #preferred_time_input').on('input', validateDateTimeInputs);
+        $('#preferred_date_input, #preferred_time_input').on('input change', validateDateTimeInputs);
     });
-    
+
 })(jQuery);
 

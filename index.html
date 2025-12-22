@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>HANAMI GARDENS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="HANAMI GARDENS" name="keywords">
-    <meta content="HANAMI GARDENS" name="description">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -23,7 +23,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -254,8 +254,7 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <small class="text-white d-block mt-3">Or contact us — click an icon to book via WhatsApp, Phone, or Email.</small>
                     </div>
                 </div>
-                <div class="
-                            </a>col-lg-6">
+                <div class="col-lg-6">
                     <div class="bg-white text-center rounded p-5">
                         <h1 class="mb-4">Book An Appointment</h1>
                         <form id="appointmentForm">
@@ -266,8 +265,8 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="phone" class="form-label visually-hidden">Phone Number</label>
-                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border-0" placeholder="+254 712 345 678" value="+254 " inputmode="tel" maxlength="16" aria-describedby="phoneFeedback" style="height: 55px;" required>
-                                    <div id="phoneFeedback" class="invalid-feedback">Please enter a valid phone number including country code (e.g., +254712345678).</div>
+                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border-0" placeholder="+254 712 345 678" value="+254" maxlength="13" aria-describedby="phoneFeedback" style="height: 55px;" required>
+                                    <div id="phoneFeedback" class="invalid-feedback">Please enter exactly 9 digits after the country code +254 (e.g., +254712345678).</div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="email" class="form-label visually-hidden">Email (optional)</label>
@@ -287,16 +286,12 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_date" class="form-label visually-hidden">Preferred Date</label>
-                                    <div class="date" id="preferred_date" data-target-input="nearest">
-                                        <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Date" data-target="#preferred_date" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                    </div>
+                                    <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0" placeholder="Preferred Date" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_time" class="form-label visually-hidden">Preferred Time</label>
-                                    <div class="time" id="preferred_time" data-target-input="nearest">
-                                        <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Time" data-target="#preferred_time" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                        <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
-                                    </div>
+                                    <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0" placeholder="Preferred Time" style="height: 55px;" required>
+                                    <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
                                 </div>
                                 <div class="col-12">
                                     <label for="notes" class="form-label visually-hidden">Additional Notes</label>
@@ -806,9 +801,7 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
