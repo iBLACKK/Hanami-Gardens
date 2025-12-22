@@ -23,7 +23,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -163,7 +163,7 @@
 
 
     <!-- Appointment Start -->
-    <div class="container-fluid bg-primary my-5 py-5">
+      <div class="container-fluid bg-primary my-5 py-5">
         <div class="container py-5">
             <div class="row gx-5">
                 <div class="col-lg-6 mb-5 mb-lg-0">
@@ -179,7 +179,6 @@
                         <div class="contact-methods">
                             <a class="contact-btn" href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" aria-label="WhatsApp">
                                 <i class="fab fa-whatsapp"></i>
-                            </a>
                             <a class="contact-btn" href="tel:+01234567890" title="Call Us" aria-label="Phone">
                                 <i class="fa fa-phone-alt"></i>
                             </a>
@@ -201,8 +200,8 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="phone" class="form-label visually-hidden">Phone Number</label>
-                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border-0" placeholder="+254 712 345 678" value="+254 " inputmode="tel" maxlength="16" aria-describedby="phoneFeedback" style="height: 55px;" required>
-                                    <div id="phoneFeedback" class="invalid-feedback">Please enter a valid phone number including country code (e.g., +254712345678).</div>
+                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border-0" placeholder="+254 712 345 678" value="+254" maxlength="13" aria-describedby="phoneFeedback" style="height: 55px;" required>
+                                    <div id="phoneFeedback" class="invalid-feedback">Please enter exactly 9 digits after the country code +254 (e.g., +254712345678).</div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="email" class="form-label visually-hidden">Email (optional)</label>
@@ -222,16 +221,12 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_date" class="form-label visually-hidden">Preferred Date</label>
-                                    <div class="date" id="preferred_date" data-target-input="nearest">
-                                        <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Date" data-target="#preferred_date" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                    </div>
+                                    <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0" placeholder="Preferred Date" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_time" class="form-label visually-hidden">Preferred Time</label>
-                                    <div class="time" id="preferred_time" data-target-input="nearest">
-                                        <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Time" data-target="#preferred_time" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                        <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
-                                    </div>
+                                    <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0" placeholder="Preferred Time" style="height: 55px;" required>
+                                    <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
                                 </div>
                                 <div class="col-12">
                                     <label for="notes" class="form-label visually-hidden">Additional Notes</label>
@@ -544,9 +539,7 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
