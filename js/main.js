@@ -21,19 +21,21 @@
 
     // Date and time picker
     // Date and time picker
-    flatpickr("#preferred_date_input", {
-        dateFormat: "d-m-Y",
-        minDate: "today",
-        allowInput: true
-    });
+    if (typeof flatpickr !== 'undefined') {
+        flatpickr("#preferred_date_input", {
+            dateFormat: "d-m-Y",
+            minDate: "today",
+            allowInput: true
+        });
 
-    flatpickr("#preferred_time_input", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        allowInput: true
-    });
+        flatpickr("#preferred_time_input", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            allowInput: true
+        });
+    }
 
     // Validates date and time
     function isDateTimeValid() {
