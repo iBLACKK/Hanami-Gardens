@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <title>HANAMI GARDENS</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta content="HANAMI GARDENS." name="keywords">
+    <meta content="HANAMI GARDENS." name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -23,7 +23,7 @@
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -180,7 +180,7 @@
                     </div>
                     <div class="text-center py-5">
                         <p>Take a refreshing dip in our serene swimming pool, ideal for relaxation, light exercise, or cooling off after spa treatments.</p>
-                        <br>
+                        <br><br><br>
                         <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div> -->
@@ -200,7 +200,7 @@
                     </div>
                     <div class="text-center py-5">
                         <p>Enjoy 10% discount for the couple massage.</p>
-                        <br><br><br><br>
+                        <br><br><br><br><br><br>
                         <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div> -->
@@ -290,16 +290,12 @@
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_date" class="form-label visually-hidden">Preferred Date</label>
-                                    <div class="date" id="preferred_date" data-target-input="nearest">
-                                        <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Date" data-target="#preferred_date" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                    </div>
+                                    <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0" placeholder="Preferred Date" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <label for="preferred_time" class="form-label visually-hidden">Preferred Time</label>
-                                    <div class="time" id="preferred_time" data-target-input="nearest">
-                                        <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Time" data-target="#preferred_time" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                        <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
-                                    </div>
+                                    <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0" placeholder="Preferred Time" style="height: 55px;" required>
+                                    <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
                                 </div>
                                 <div class="col-12">
                                     <label for="notes" class="form-label visually-hidden">Additional Notes</label>
@@ -632,9 +628,7 @@
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
