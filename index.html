@@ -79,7 +79,7 @@
                         style="border-color: rgba(256, 256, 256, .3) !important;">Welcome To Hanami Gardens</h4>
                     <h1 class="display-1 text-white mb-md-4">Unwind. Relax. Enjoy.</h1>
                     <div class="pt-2">
-                        <a href="search.html" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Service</a>
+                        <a href="price.html" class="btn btn-light rounded-pill py-md-3 px-md-5 mx-2">Find Service</a>
                         <a href="appointment.html" class="btn btn-outline-light rounded-pill py-md-3 px-md-5 mx-2">Appointment</a>
                     </div>
                 </div>
@@ -254,61 +254,265 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <small class="text-white d-block mt-3">Or contact us — click an icon to book via WhatsApp, Phone, or Email.</small>
                     </div>
                 </div>
-                <div class="
-                            </a>col-lg-6">
-                    <div class="bg-white text-center rounded p-5">
-                        <h1 class="mb-4">Book An Appointment</h1>
-                        <form id="appointmentForm">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label for="full_name" class="form-label visually-hidden">Full Name</label>
-                                    <input id="full_name" name="full_name" type="text" class="form-control bg-light border-0" placeholder="Full Name" style="height: 55px;" required>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="phone" class="form-label visually-hidden">Phone Number</label>
-                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border-0" placeholder="+254 712 345 678" value="+254 " inputmode="tel" maxlength="16" aria-describedby="phoneFeedback" style="height: 55px;" required>
-                                    <div id="phoneFeedback" class="invalid-feedback">Please enter a valid phone number including country code (e.g., +254712345678).</div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="email" class="form-label visually-hidden">Email (optional)</label>
-                                    <input id="email" name="email" type="email" class="form-control bg-light border-0" placeholder="Email (optional)" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="service" class="form-label visually-hidden">Select Service</label>
-                                    <select id="service" name="service" class="form-select bg-light border-0" style="height: 55px;" required>
-                                        <option value="" selected disabled>Select Service</option>
-                                        <option value="salon">Salon</option>
-                                        <option value="sauna">Sauna</option>
-                                        <option value="massage">Massage</option>
-                                        <option value="barber">Barber Shop</option>
-                                        <option value="swimming">Swimming</option>
-                                        <option value="restaurant">Restaurant</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="preferred_date" class="form-label visually-hidden">Preferred Date</label>
-                                    <div class="date" id="preferred_date" data-target-input="nearest">
-                                        <input id="preferred_date_input" name="preferred_date" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Date" data-target="#preferred_date" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="preferred_time" class="form-label visually-hidden">Preferred Time</label>
-                                    <div class="time" id="preferred_time" data-target-input="nearest">
-                                        <input id="preferred_time_input" name="preferred_time" type="text" class="form-control bg-light border-0 datetimepicker-input" placeholder="Preferred Time" data-target="#preferred_time" data-toggle="datetimepicker" aria-describedby="datetimeFeedback" style="height: 55px;" required>
-                                        <div id="datetimeFeedback" class="invalid-feedback" style="display:none;">Please choose a date and time that is now or in the future.</div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <label for="notes" class="form-label visually-hidden">Additional Notes</label>
-                                    <textarea id="notes" name="notes" class="form-control bg-light border-0" placeholder="Additional notes (optional)" rows="4"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Make An Appointment</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <div class="col-lg-6">
+    <div class="bg-white rounded p-5 shadow-sm">
+        <h2 class="text-center text-dark mb-5 fw-bold">Book An Appointment</h2>
+        
+        <!-- Success Message -->
+        <div id="success_message" style="display:none;" class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-left: 5px solid #047857;">
+            <div class="d-flex align-items-center">
+                <div class="me-3">
+                    <i class="fas fa-check-circle fa-2x text-white"></i>
                 </div>
+                <div class="flex-grow-1">
+                    <h5 class="text-white mb-1 fw-bold">
+                        <i class="fas fa-thumbs-up me-2"></i>Appointment Request Submitted!
+                    </h5>
+                    <p class="text-white mb-0 small">
+                        Thank you for booking with Hanami Gardens. Your request has been sent successfully. We'll contact you within 24 hours to confirm your appointment.
+                    </p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div id="error_message" style="display:none;" class="alert alert-danger alert-dismissible fade show border-0 shadow-sm" role="alert" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); border-left: 5px solid #991b1b;">
+            <div class="d-flex align-items-center">
+                <div class="me-3">
+                    <i class="fas fa-exclamation-triangle fa-2x text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <h5 class="text-white mb-1 fw-bold">
+                        <i class="fas fa-times-circle me-2"></i>Submission Failed
+                    </h5>
+                    <p class="text-white mb-0 small">
+                        Please fill in all required fields correctly and try again. Make sure your phone number includes the country code.
+                    </p>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+
+        <script>
+            var submitted = false;
+            var isSubmitting = false;
+
+            function handleFormSubmit() {
+                if (submitted && !isSubmitting) {
+                    document.getElementById("appointmentForm").reset();
+                    document.getElementById("error_message").style.display = "none";
+                    document.getElementById("success_message").style.display = "block";
+                    
+                    // Add animation
+                    const successMsg = document.getElementById("success_message");
+                    successMsg.style.animation = "slideInDown 0.5s ease-out";
+                    
+                    // Scroll to message
+                    successMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+                    
+                    // Auto-dismiss after 6 seconds
+                    setTimeout(() => {
+                        const alert = new bootstrap.Alert(successMsg);
+                        alert.close();
+                    }, 6000);
+                    
+                    isSubmitting = false;
+                }
+            }
+
+            // Form validation and submission handling
+            document.getElementById("appointmentForm").addEventListener("submit", function(e) {
+                const fullName = document.getElementById("fullName").value.trim();
+                const phoneNumber = document.getElementById("phoneNumber").value.trim();
+                const service = document.getElementById("service").value;
+                const date = document.getElementById("date").value;
+                const time = document.getElementById("time").value;
+
+                // Basic validation
+                if (!fullName || !phoneNumber || !service || !date || !time) {
+                    e.preventDefault();
+                    document.getElementById("error_message").style.display = "block";
+                    document.getElementById("success_message").style.display = "none";
+                    
+                    const errorMsg = document.getElementById("error_message");
+                    errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+                    
+                    return false;
+                }
+
+                // Disable submit button during submission
+                const submitBtn = this.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+                isSubmitting = true;
+
+                // Re-enable button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-calendar-check me-2"></i>Book My Appointment';
+                }, 3000);
+            });
+        </script>
+
+        <!-- Hidden iframe -->
+        <iframe name="hidden_iframe" style="display:none;" onload="handleFormSubmit()"></iframe>
+
+        <form id="appointmentForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSdnn9GiT3UQf6IeEmdB2Yl9erM7aK-diHaP8BvfyfasNc1gUg/formResponse"
+            method="POST"
+            target="hidden_iframe"
+            onsubmit="submitted=true;"
+            novalidate>
+
+            <div class="row g-3">
+
+                <!-- Full Name -->
+                <div class="col-12">
+                    <label for="fullName" class="form-label fw-semibold text-dark">
+                        Full Name <span class="text-danger">*</span>
+                    </label>
+                    <input 
+                        id="fullName"
+                        name="entry.1022564064"
+                        type="text"
+                        class="form-control form-control-lg bg-light border-0"
+                        placeholder="Enter your full name"
+                        required
+                        autocomplete="name">
+                    <small class="text-muted d-block mt-1">
+                        Your full name as you'd like it displayed
+                    </small>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="col-12 col-sm-6">
+                    <label for="phoneNumber" class="form-label fw-semibold text-dark">
+                        Phone Number <span class="text-danger">*</span>
+                    </label>
+                    <input 
+                        id="phoneNumber"
+                        name="entry.1405079537"
+                        type="tel"
+                        class="form-control form-control-lg bg-light border-0"
+                        placeholder="+254 712 345678"
+                        value="+254"
+                        required
+                        autocomplete="tel">
+                    <small class="text-muted d-block mt-1">
+                        Include country code
+                    </small>
+                </div>
+
+                <!-- Email -->
+                <div class="col-12 col-sm-6">
+                    <label for="email" class="form-label fw-semibold text-dark">
+                        Email Address
+                    </label>
+                    <input 
+                        id="email"
+                        name="entry.1978498181"
+                        type="email"
+                        class="form-control form-control-lg bg-light border-0"
+                        placeholder="your.email@example.com"
+                        autocomplete="email">
+                    <small class="text-muted d-block mt-1">
+                        Optional - for confirmation
+                    </small>
+                </div>
+
+                <!-- Service Selection -->
+                <div class="col-12 col-sm-6">
+                    <label for="service" class="form-label fw-semibold text-dark">
+                        Select Service <span class="text-danger">*</span>
+                    </label>
+                    <select 
+                        id="service"
+                        name="entry.1432158383"
+                        class="form-select form-select-lg bg-light border-0"
+                        required>
+                        <option value="" disabled selected>Choose a service...</option>
+                        <option value="Salon">💇 Salon</option>
+                        <option value="Sauna">🧖 Sauna</option>
+                        <option value="Massage">💆 Massage</option>
+                        <option value="Barber Shop">✂️ Barber Shop</option>
+                        <option value="Swimming Pool">🏊 Swimming Pool</option>
+                        <option value="Restaurant">🍽️ Restaurant</option>
+                    </select>
+                </div>
+
+                <!-- Preferred Date -->
+                <div class="col-12 col-sm-6">
+                    <label for="date" class="form-label fw-semibold text-dark">
+                        Preferred Date <span class="text-danger">*</span>
+                    </label>
+                    <input 
+                        id="date"
+                        name="entry.1118544473"
+                        type="date"
+                        class="form-control form-control-lg bg-light border-0"
+                        required>
+                    <small class="text-muted d-block mt-1">
+                        Select your preferred date
+                    </small>
+                </div>
+
+                <!-- Preferred Time -->
+                <div class="col-12 col-sm-6">
+                    <label for="time" class="form-label fw-semibold text-dark">
+                        Preferred Time <span class="text-danger">*</span>
+                    </label>
+                    <input 
+                        id="time"
+                        name="entry.730980446"
+                        type="time"
+                        class="form-control form-control-lg bg-light border-0"
+                        required>
+                    <small class="text-muted d-block mt-1">
+                        Opening hours: 8:00 AM - 8:00 PM
+                    </small>
+                </div>
+
+                <!-- Additional Notes -->
+                <div class="col-12">
+                    <label for="notes" class="form-label fw-semibold text-dark">
+                        Additional Notes
+                    </label>
+                    <textarea 
+                        id="notes"
+                        name="entry.1168037865"
+                        class="form-control form-control-lg bg-light border-0"
+                        placeholder="Any special requests or preferences? (optional)"
+                        rows="3"
+                        maxlength="500"></textarea>
+                    <small class="text-muted d-block mt-1">
+                        Tell us about any special needs or preferences (500 characters max)
+                    </small>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-12">
+                    <button 
+                        class="btn btn-primary btn-lg w-100 py-3 fw-semibold" 
+                        type="submit">
+                        <i class="fas fa-calendar-check me-2"></i>
+                        Book My Appointment
+                    </button>
+                </div>
+
+                <!-- Required Fields Note -->
+                <div class="col-12">
+                    <small class="text-muted d-block text-center">
+                        <span class="text-danger">*</span> Required fields
+                    </small>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
             </div>
         </div>
     </div>
@@ -329,13 +533,13 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <img class="img-fluid rounded-top" src="img/Sauna_P.png" alt="sauna">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
                             style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white">Sauna</h3>
-                            <h1 class="display-4 text-white mb-0">
+                            <h3 class="text-white">Herbal Sauna</h3>
+                            <!-- <h1 class="display-4 text-white mb-0">
                                 <small class="align-top fw-normal"
                                     style="font-size: 22px; line-height: 45px;">Ksh.</small>2000<small
                                     class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">/
-                                    Hour</small>
-                            </h1>
+                                    Session</small>
+                            </h1> -->
                         </div>
                     </div>
                     <div class="text-center py-5">
@@ -344,7 +548,7 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <p>Highest Success Rate</p>
                         <p>Telephone Service</p> --> 
                         <br><br>
-                        <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
+                        <a href="sauna_menu.html" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div>
                 <div class="bg-light rounded text-center">
@@ -353,41 +557,41 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
                             style="background: rgba(29, 42, 77, .8);">
                             <h3 class="text-white">Massage</h3>
-                            <h1 class="display-4 text-white mb-0">
+                            <!-- <h1 class="display-4 text-white mb-0">
                                 <small class="align-top fw-normal"
-                                    style="font-size: 22px; line-height: 45px;">From Ksh.</small>2000<small
+                                    style="font-size: 22px; line-height: 45px;">From Ksh.</small>1000<small
                                     class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">/
-                                    Hour</small>
-                            </h1>
+                                    Session</small>
+                            </h1> -->
                         </div>
                     </div>
                     <div class="text-center py-5">
                         <p>Unwind with relaxing and therapeutic massage sessions designed to ease muscle tension, improve circulation, and promote deep relaxation.</p>
                         <br>
-                        <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
+                        <a href="massage_menu.html" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div>
                 <div class="bg-light rounded text-center">
                     <div class="position-relative">
-                        <img class="img-fluid rounded-top" src="img/salon_p.png" alt="Salon">
+                        <img class="img-fluid rounded-top" src="img/Restaurant_pricing.png" alt="Restaurant">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
                             style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white">Salon</h3>
-                            <h1 class="display-4 text-white mb-0">
+                            <h3 class="text-white">Restaurant</h3>
+                            <!-- <h1 class="display-4 text-white mb-0">
                                 <small class="align-top fw-normal"
-                                    style="font-size: 22px; line-height: 45px;">From Ksh.</small>1000<small
+                                    style="font-size: 22px; line-height: 45px;">From Ksh.</small>200<small
                                     class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">/
-                                    Person</small>
-                            </h1>
+                                    Serving</small>
+                            </h1> -->
                         </div>
                     </div>
                     <div class="text-center py-5">
-                        <p>Enjoy professional hair and beauty services tailored to your style, using quality products for a polished and confident look.</p>
-                        <br><br>
-                        <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
+                        <p>Enjoy freshly prepared meals and beverages crafted to complement your wellness experience.</p>
+                        <br><br><br>
+                        <a href="restaurant_menu.html" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div>
-                <div class="bg-light rounded text-center">
+                <!-- <div class="bg-light rounded text-center">
                     <div class="position-relative">
                         <img class="img-fluid rounded-top" src="img/kinyozi_p.png" alt="Barber Shop">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
@@ -406,8 +610,8 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         
                         <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
-                </div>
-                  <div class="bg-light rounded text-center">
+                </div> -->
+                  <!-- <div class="bg-light rounded text-center">
                     <div class="position-relative">
                         <img class="img-fluid rounded-top" src="img/swimming_p.png" alt="Swimming Pool">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
@@ -426,8 +630,8 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <br>
                         <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
-                </div>
-                  <div class="bg-light rounded text-center">
+                </div> -->
+                <!-- <div class="bg-light rounded text-center">
                     <div class="position-relative">
                         <img class="img-fluid rounded-top" src="img/couple_massage_p.png" alt="Couple Massage">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
@@ -446,25 +650,25 @@ Step into a world of soothing scents and expert treatments crafted to restore ba
                         <br><br><br><br>
                         <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
-                </div>
+                </div> -->
                   <div class="bg-light rounded text-center">
                     <div class="position-relative">
                         <img class="img-fluid rounded-top" src="img/massage_sauna_p.png" alt="Massage & Sauna Combo">
                         <div class="position-absolute w-100 h-100 top-50 start-50 translate-middle rounded-top d-flex flex-column align-items-center justify-content-center"
                             style="background: rgba(29, 42, 77, .8);">
-                            <h3 class="text-white">Sauna & Massage Combo</h3>
-                            <h1 class="display-4 text-white mb-0">
+                            <h3 class="text-white">Herbal Sauna & Massage Combo</h3>
+                            <!-- <h1 class="display-4 text-white mb-0">
                                 <small class="align-top fw-normal"
-                                    style="font-size: 22px; line-height: 45px;">Ksh.</small>500 Off<small
+                                    style="font-size: 22px; line-height: 45px;">From Ksh.</small>3000<small
                                     class="align-bottom fw-normal" style="font-size: 16px; line-height: 40px;">/
                                     Person</small>
-                            </h1>
+                            </h1> -->
                         </div>
                     </div>
                     <div class="text-center py-5">
-                        <p>Enjoy Ksh. 500 discount for the sauna and massage combo.</p>
-                        <br><br><br><br><br>
-                        <a href="#!" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
+                        <p>Enjoy the relaxing, rejuvenating, and healing benefits of our massage and sauna combo at pocket-friendly prices.</p>
+                        <br><br><br><br>
+                        <a href="massage_sauna_menu.html" class="btn btn-primary rounded-pill py-3 px-5 my-2">Explore</a>
                     </div>
                 </div>
             </div>

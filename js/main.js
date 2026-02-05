@@ -19,43 +19,6 @@
     });
 
 
-    // Date and time picker
-    $('.date').datetimepicker({
-        format: 'L',
-        // prevent selection of past dates
-        minDate: moment().startOf('day')
-    });
-    $('.time').datetimepicker({
-        format: 'LT'
-    });
-
-    // Update the timepicker minimum when the date changes: if date is today, min time is now
-    function updateTimeMinSetting() {
-        var dateVal = $('#preferred_date_input').val();
-        var $timePicker = $('#preferred_time');
-        if ($timePicker.length === 0) return;
-
-        if (!dateVal) {
-            // remove any minDate restriction
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-            return;
-        }
-        var d = moment(dateVal, 'L', true);
-        if (!d.isValid()) {
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-            return;
-        }
-        if (d.isSame(moment(), 'day')) {
-            // set minDate/time to now
-            try { $timePicker.datetimepicker('minDate', moment()); } catch(e) {}
-        } else {
-            // remove min
-            try { $timePicker.datetimepicker('minDate', false); } catch(e) {}
-        }
-    }
-    // run on load in case a date is prefilled
-    updateTimeMinSetting();
-    
     
     // Back to top button
     $(window).scroll(function () {
@@ -134,7 +97,8 @@
         var $phone = $('#phone');
         var $form = $('#appointmentForm');
 
-        if ($phone.length === 0 || $form.length === 0) return; // nothing to do on pages without the appointment form
+        // Exit early if form elements don't exist on this page
+        if (!$phone || !$phone.length || !$form || !$form.length) return;
 
         function isValidE164(val) {
             if (!val) return false;
@@ -229,69 +193,33 @@
             $(input).trigger('input');
         });
 
+        // Form submission handler
         $form.on('submit', function (e) {
-            if (!isValidE164($phone.val())) {
+            // Validate phone format
+            var phoneVal = $phone.val() || '';
+            if (!isValidE164(phoneVal)) {
                 e.preventDefault();
                 $phone.addClass('is-invalid').removeClass('is-valid');
                 $phone[0].focus();
+                alert('Please enter a valid phone number in E.164 format (e.g., +254712345678)');
                 return false;
             }
-            // Validate preferred date/time is now or future
-            var dateVal = $('#preferred_date_input').val();
-            var timeVal = $('#preferred_time_input').val();
-            var $date = $('#preferred_date_input');
-            var $time = $('#preferred_time_input');
-            function isDateTimeValid() {
-                if (!dateVal || !timeVal) return false;
-                var dt = moment(dateVal + ' ' + timeVal, 'L LT', true);
-                if (!dt.isValid()) return false;
-                return dt.isSameOrAfter(moment());
-            }
-
-            if (!isDateTimeValid()) {
-                e.preventDefault();
-                $('#datetimeFeedback').show();
-                $date.addClass('is-invalid');
-                $time.addClass('is-invalid');
-                $date[0].focus();
-                return false;
-            }
+            
+            // Log form data for debugging
+            console.log('Form submitted with data:', {
+                name: $('#full_name').val(),
+                phone: phoneVal,
+                email: $('#email').val(),
+                service: $('#service').val(),
+                date: $('#preferred_date_input').val(),
+                time: $('#preferred_time_input').val(),
+                notes: $('#notes').val()
+            });
+            
+            console.log('Submitting to Google Form...');
         });
-
-        // Validate when user changes date or time
-        function validateDateTimeInputs() {
-            var dateVal = $('#preferred_date_input').val();
-            var timeVal = $('#preferred_time_input').val();
-            var $date = $('#preferred_date_input');
-            var $time = $('#preferred_time_input');
-            var $fb = $('#datetimeFeedback');
-            if (!dateVal || !timeVal) {
-                $date.removeClass('is-valid').removeClass('is-invalid');
-                $time.removeClass('is-valid').removeClass('is-invalid');
-                $fb.hide();
-                return;
-            }
-            var dt = moment(dateVal + ' ' + timeVal, 'L LT', true);
-            if (!dt.isValid() || !dt.isSameOrAfter(moment())) {
-                $date.addClass('is-invalid').removeClass('is-valid');
-                $time.addClass('is-invalid').removeClass('is-valid');
-                $fb.show();
-            } else {
-                $date.addClass('is-valid').removeClass('is-invalid');
-                $time.addClass('is-valid').removeClass('is-invalid');
-                $fb.hide();
-            }
-        }
-
-        // hook into tempusdominus change events
-        $('.date').on('change.datetimepicker', function() {
-            updateTimeMinSetting();
-            validateDateTimeInputs();
-        });
-        $('.time').on('change.datetimepicker', validateDateTimeInputs);
-        // also validate on manual input
-        $('#preferred_date_input, #preferred_time_input').on('input', validateDateTimeInputs);
     });
+    
     
 })(jQuery);
 
